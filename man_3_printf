@@ -1,127 +1,88 @@
-.\" _printf man page
+.\" _printf man page /usr/share/man/man3/printf.3
 .\"
-.\"
-.\"
-.\"
-.\"
-.TH _PRINTF "May 20 2022" "0.1" "Library functions manual"
+.TH _PRINTF 3 "15-03-2021" "0.1" "_printf"
 
 .SH NAME
-.SH ""
+_printf
 
-.B _printf
-- custom version for printf function.
+.B_printf - format and print data. Part of a project at Holberton School.
 
 .SH SYNOPSIS
-.SH ""
+Part of a project at holberton school.
+This project mimics the printf found in in C.
 
-#include "mainn.h"
-
-int _printf(const char *[FORMAT], ...);
+_printf FORMAT [ARGUMENT]...
+.ss
 
 .SH DESCRIPTION
-.SH ""
 
-The printf function sends formatted output to stdout.
-A custom _printf() for learning purposes was developed by cohort  #6 students Udoka Christopher and Hope Akpabio as a project in ALX.
-_printf() function format string is a character string, beginning and ending in its initial shift state, if any.
-These arguments are placed using the percentage '%' operator
+_printf() the function produces output according to format string that \
+specifies how subsequent arguments are written and converted to stdout, the \
+standard output stream.
 
-.SS Compilation
+_printf() will loop through the format for a conversion specifier (%). If found\
+, it will access an array of structures and match the corresponding character \
+with the given function. The specified function will return a string-converted \
+version of the result and immediately passed into the buffer.
 
-.P
-.RS
-#include "main.h"
+.SH CONVERSION SPECIFIERS
 
-$ gcc -Wall -Werror -Wextra -pedantic -Wno-format *.c
-$ gcc -Wall -Werror -Wextra -pedantic -g -Wno-format *.c (for gdb debbuging)
-.RE
+.IP %s
+prints a string.
+.IP %c
+prints a character.
+.IP %d
+prints an integer. Same as %i.
+.IP %i
+See %d.
+.IP %u
+Prints unsigned int.
+.IP %o
+Converts unsigned int to octal.
+.IP %x
+Converts unsigned int to hexadecimal (lowercase)
+.IP %X
+Converts unsigned int to hexadecimal (uppercase)
+.IP %r
+Prints reverse of intput string
+.IP %R
+Converts string to rot13
 
-.SS Printing
-.RS
+.SH OPTIONS
 
-int _printf(const char *[FORMAT], ...);
+Pending
 
-FORMAT is the string that takes n specifier followed by a '%'
-symbol. i.e. "Hello this is %s from %d cohort". '...' is the variadic \
-(any type of variable).
+.SH FORMAT
+controls the output as in C printf.  Interpreted sequences are:
+
+       \n     new line
+
+       \t     tab
+
+       %%     a single %
 
 .SS Example
-
 .RS
+_printf("Hello %s", "world");
+Prints string "Hello world"
 
-.B Input
-.PP
-_printf("Hello this is %s from %d cohort\\n\\", 33);
-.PP
-.B Output
-.PP
-Hello this is %s from %d cohort
+_printf("They call me mad, but one day when history of France is written, they \
+will mark my name well ...%s ", "Sidney Applebaum")
+
 .RE
 
 .SS Return Value
+Upon success, these main function will return the number of characters printed.
 
-Return value is a n number of characters except NULL
-
-.SH FLAG SPECIFIERS
+.SH "SEE ALSO"
 .SH ""
 
-custom and non-custom specifier modifiers
-
-.SH THE LENGTH MODIFIERS
-.SH ""
-
-Length modifiers.
-
-.SH THE CONVERSION SPECIFIERS
-.SH ""
-
-.RS
-Current arguments handled by conversion specifiers:
-
-.IT
-.B %
-- % symbol is set without argument and conversion specification has to be'%%'.
-
-.IT
-.B c
-- integer or char argument converted to unsigned char.
-
-.IT
-.B d, i
-- int argument is converted to signed decimal integer.
-
-.IT
-.B s
-- string argument. _printf handles s conversion specifier if the argument value
- is not a pointer to a literal string. \
-
-.IT
-.B o, u, x, X
-- unsigned int argument converted to unsigned octal (o), unsigned decimal (u),
-unsigned hexidecimal notation (x) for lower case and (X) for upper case
-
-.IT
-.B b
-- The unsigned int argument is converted to binary.
-
-.IT
-.B p
-- The pointer is printed in hexidecimal format preceded by '0x'.
-
-.IT
-.B r, R
-- 'r' prints string in reverse. 'R' prints encrypted rot13.
-
-.IT
-.B S
-- ascii <32 & >127 has to appear in the argument string. converted to
-hexadecimal preceded by \x
-
-.RE
+.BR printf(1)
 
 .P
 
-.SH "AUTHORS"
-.SH ""
-Nwabueze Franklin and Ifeoluwa Atansieye
+.SH BUGS
+Memory issues are known to frequent this function. User beware.
+
+.SH "AUTHOR"
+Beteab Admassu and Yitbarek yakob
