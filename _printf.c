@@ -1,94 +1,45 @@
-#include <stdarg.h>
-#include <unistd.h>
 #include "main.h"
-
 /**
- * _printf - Custom printf function
- * @format: Format string
- * Return: Number of characters printed (excluding null byte)
+ * _printf - is a function that selects the correct function to print.
+ * @format: identifier to look for.
+ * Return: the length of the string.
  */
-int _printf(const char *format, ...)
+int _printf(const char * const format, ...)
 {
-    va_list args;
-    int printed_chars = 0;
+	convert_match m[] = {
+		{"%s", printf_string}, {"%c", printf_char},
+		{"%%", printf_37},
+		{"%i", printf_int}, {"%d", printf_dec}, {"%r", printf_srev},
+		{"%R", printf_rot13}, {"%b", printf_bin}, {"%u", printf_unsigned},
+		{"%o", printf_oct}, {"%x", printf_hex}, {"%X", printf_HEX},
+		{"%S", printf_exclusive_string}, {"%p", printf_pointer}
+	};
 
-    va_start(args, format);
+	va_list args;
+	int i = 0, j, len = 0;
 
-    while (*format)
-    {
-        if (*format == '%')
-        {
-            format++;
-            if (*format == '\0')
-                break;
-            if (*format == 'c')
-                printed_chars += print_char(args);
-            else if (*format == 's')
-                printed_chars += print_string(args);
-            else if (*format == '%')
-                printed_chars += print_percent();
-            else
-            {
-                write(1, &(*format), 1);
-                printed_chars++;
-            }
-        }
-        else
-        {
-            write(1, &(*format), 1);
-            printed_chars++;
-        }
-        format++;
-    }
+	va_start(args, format);
+	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
+		return (-1);
 
-    va_end(args);
-
-    return (printed_chars);
+Here:
+	while (format[i] != '\0')
+	{
+		j = 13;
+		while (j >= 0)
+		{
+			if (m[j].id[0] == format[i] && m[j].id[1] == format[i + 1])
+			{
+				len += m[j].f(args);
+				i = i + 2;
+				goto Here;
+			}
+			j--;
+		}
+		_putchar(format[i]);
+		len++;
+		i++;
+	}
+	va_end(args);
+	return (len);
 }
-
-/**
- * print_char - Print a character
- * @args: va_list containing the character to print
- * Return: Number of characters printed
- */
-int print_char(va_list args)
-{
-    char c = va_arg(args, int);
-
-    write(1, &c, 1);
-    return (1);
-}
-
-/**
- * print_string - Print a string
- * @args: va_list containing the string to print
- * Return: Number of characters printed
- */
-int print_string(va_list args)
-{
-    char *str = va_arg(args, char *);
-    int printed_chars = 0;
-
-    if (!str)
-        str = "(null)";
-
-    while (*str)
-    {
-        write(1, str, 1);
-        printed_chars++;
-        str++;
-    }
-
-    return (printed_chars);
-}
-
-/**
- * print_percent - Print a percent sign
- * Return: Number of characters printed
- */
-int print_percent(void)
-{
-    write(1, "%", 1);
-    return (1);
-}
-
