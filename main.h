@@ -1,49 +1,98 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <stdio.h>
-#include <stdlib.h>
+/* -------------------------------------------------------- */
+/* ----------------------- HEADERS ------------------------ */
+/* -------------------------------------------------------- */
 #include <stdarg.h>
-#include <limits.h>
+#include <stdlib.h>
 #include <unistd.h>
 
+/* -------------------------------------------------------- */
+/* ----------------------- CONSTS ------------------------- */
+/* -------------------------------------------------------- */
+#define NULL_STRING "(null)"
+#define ACTIVE_SPECIFIERS_NUM 10
+#define BUFFER_SIZE 1024
+#define BUF_FLUSH -1
 
+/* -------------------------------------------------------- */
+/* ------------------ STRUCTS & ENUMS --------------------- */
+/* -------------------------------------------------------- */
+/**
+ * struct flags - struct for flags
+ * @minus: flag for minus
+ * @plus: flag for plus
+ * @space: flag for space
+ * @hash: flag for hash
+ * @zero: flag for zero
+ *
+ * Description: struct for flags
+ */
+typedef struct flags
+{
+	int minus;
+	int plus;
+	int space;
+	int hash;
+	int zero;
+} Flags;
 
 /**
- * struct format - match the conversion specifiers for printf
- * @id: type char pointer of the specifier i.e (l, h) for (d, i, u, o, x, X)
- * @f: type pointer to function for the conversion specifier
+ * struct PrintSpecifierPair - struct for print specifier pair
+ * @specifier: specifier
+ * @print_func: print function
  *
+ * Description: struct for print specifier pair
  */
-
-typedef struct format
+typedef struct PrintSpecifierPair
 {
-	char *id;
-	int (*f)();
-} convert_match;
+	char specifier;
+	int (*print_func)(va_list ap, Flags *f);
+} PrintSpecifierPair;
 
-int printf_pointer(va_list val);
-int printf_hex_aux(unsigned long int num);
-int printf_HEX_aux(unsigned int num);
-int printf_exclusive_string(va_list val);
-int printf_HEX(va_list val);
-int printf_hex(va_list val);
-int printf_oct(va_list val);
-int printf_unsigned(va_list args);
-int printf_bin(va_list val);
-int printf_srev(va_list args);
-int printf_rot13(va_list args);
-int printf_int(va_list args);
-int printf_dec(va_list args);
-int _strlen(char *s);
-int *_strcpy(char *dest, char *src);
-int _strlenc(const char *s);
-int rev_string(char *s);
-int _strlenc(const char *s);
-int printf_37(void);
-int printf_char(va_list val);
-int printf_string(va_list val);
-int _putchar(char c);
+/* -------------------------------------------------------- */
+/* --------------------- PROTOTYPES ----------------------- */
+/* -------------------------------------------------------- */
+
+/* Main printf Function - printf.c */
 int _printf(const char *format, ...);
+
+/* UTILS - utils.c */
+int _is_digit(char c);
+int _atoi(char *s);
+unsigned int _strlen(char *s);
+
+/* Write Functions - write.c */
+int _putchar(char c);
+int _puts(char *str);
+
+/* Muxes Functions - multiplexers.c */
+int (*print_mux(char s))(va_list ap, Flags *f);
+int flag_mux(char s, Flags *f);
+
+/* Base Converter - base_converter.c */
+char *base_converter(unsigned long int num, int base, int lowercase);
+
+/* -------------------------------------------------------- */
+/* ------------------- PRINT FUNCTIONS -------------------- */
+/* -------------------------------------------------------- */
+
+/* Print alphapetical characters - alpha_print_funcs */
+int print_char(va_list ap, Flags *f);
+int print_str(va_list ap, Flags *f);
+
+/* Print numbers - number_print_funcs.c */
+int print_int(va_list ap, Flags *f);
+
+/* Print Percent Char - print_percent.c */
+int print_percent(va_list ap, Flags *f);
+
+/* Print different bases - dif_base_print_funcs.c */
+int print_binary(va_list ap, Flags *f);
+int print_unsigned(va_list ap, Flags *f);
+int print_hex(va_list ap, Flags *f);
+int print_hex_upper(va_list ap, Flags *f);
+int print_octal(va_list ap, Flags *f);
 
 #endif
