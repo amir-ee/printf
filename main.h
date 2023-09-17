@@ -1,98 +1,76 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-/* -------------------------------------------------------- */
-/* ----------------------- HEADERS ------------------------ */
-/* -------------------------------------------------------- */
-#include <stdarg.h>
 #include <stdlib.h>
-#include <unistd.h>
+#include <stdarg.h>
 
-/* -------------------------------------------------------- */
-/* ----------------------- CONSTS ------------------------- */
-/* -------------------------------------------------------- */
-#define NULL_STRING "(null)"
-#define ACTIVE_SPECIFIERS_NUM 10
-#define BUFFER_SIZE 1024
-#define BUF_FLUSH -1
-
-/* -------------------------------------------------------- */
-/* ------------------ STRUCTS & ENUMS --------------------- */
-/* -------------------------------------------------------- */
 /**
- * struct flags - struct for flags
- * @minus: flag for minus
- * @plus: flag for plus
- * @space: flag for space
- * @hash: flag for hash
- * @zero: flag for zero
- *
- * Description: struct for flags
+ * struct flags - struct containing flags to "turn on"
+ * when a flag specifier is passed to _printf()
+ * @plus: flag for the '+' character
+ * @space: flag for the ' ' character
+ * @hash: flag for the '#' character
  */
 typedef struct flags
 {
-	int minus;
 	int plus;
 	int space;
 	int hash;
-	int zero;
-} Flags;
+} flags_t;
 
 /**
- * struct PrintSpecifierPair - struct for print specifier pair
- * @specifier: specifier
- * @print_func: print function
- *
- * Description: struct for print specifier pair
+ * struct printHandler - struct to choose the right function depending
+ * on the format specifier passed to _printf()
+ * @c: format specifier
+ * @f: pointer to the correct printing function
  */
-typedef struct PrintSpecifierPair
+typedef struct printHandler
 {
-	char specifier;
-	int (*print_func)(va_list ap, Flags *f);
-} PrintSpecifierPair;
+	char c;
+	int (*f)(va_list ap, flags_t *f);
+} ph;
 
-/* -------------------------------------------------------- */
-/* --------------------- PROTOTYPES ----------------------- */
-/* -------------------------------------------------------- */
+/* print_nums */
+int print_int(va_list l, flags_t *f);
+void print_number(int n);
+int print_unsigned(va_list l, flags_t *f);
+int count_digit(int i);
 
-/* Main printf Function - printf.c */
+/* print_bases */
+int print_hex(va_list l, flags_t *f);
+int print_hex_big(va_list l, flags_t *f);
+int print_binary(va_list l, flags_t *f);
+int print_octal(va_list l, flags_t *f);
+
+/* converter */
+char *convert(unsigned long int num, int base, int lowercase);
+
+/* _printf */
 int _printf(const char *format, ...);
 
-/* UTILS - utils.c */
-int _is_digit(char c);
-int _atoi(char *s);
-unsigned int _strlen(char *s);
+/* get_print */
+int (*get_print(char s))(va_list, flags_t *);
 
-/* Write Functions - write.c */
+/* get_flag */
+int get_flag(char s, flags_t *f);
+
+/* print_alpha */
+int print_string(va_list l, flags_t *f);
+int print_char(va_list l, flags_t *f);
+
+/* write_funcs */
 int _putchar(char c);
 int _puts(char *str);
 
-/* Muxes Functions - multiplexers.c */
-int (*print_mux(char s))(va_list ap, Flags *f);
-int flag_mux(char s, Flags *f);
+/* print_custom */
+int print_rot13(va_list l, flags_t *f);
+int print_rev(va_list l, flags_t *f);
+int print_bigS(va_list l, flags_t *f);
 
-/* Base Converter - base_converter.c */
-char *base_converter(unsigned long int num, int base, int lowercase);
+/* print_address */
+int print_address(va_list l, flags_t *f);
 
-/* -------------------------------------------------------- */
-/* ------------------- PRINT FUNCTIONS -------------------- */
-/* -------------------------------------------------------- */
-
-/* Print alphapetical characters - alpha_print_funcs */
-int print_char(va_list ap, Flags *f);
-int print_str(va_list ap, Flags *f);
-
-/* Print numbers - number_print_funcs.c */
-int print_int(va_list ap, Flags *f);
-
-/* Print Percent Char - print_percent.c */
-int print_percent(va_list ap, Flags *f);
-
-/* Print different bases - dif_base_print_funcs.c */
-int print_binary(va_list ap, Flags *f);
-int print_unsigned(va_list ap, Flags *f);
-int print_hex(va_list ap, Flags *f);
-int print_hex_upper(va_list ap, Flags *f);
-int print_octal(va_list ap, Flags *f);
+/* print_percent */
+int print_percent(va_list l, flags_t *f);
 
 #endif
