@@ -1,34 +1,46 @@
 #include "main.h"
 
 /**
- * get_flags - Calculates active flags
- * @format: Formatted string in which to print the arguments
- * @i: take a parameter.
- * Return: Flags:
+ * get_flags - Extracts flags from a format string
+ * @format: The input format string
+ * @i: A pointer to the current position in the format string
+ *
+ * Description:
+ * This function parses the format string starting from the position pointed
+ * to by 'i' and extracts flags as specified by the format flags array.
+ *
+ * Format flags:
+ *   - '-' (F_MINUS): Left-align the output
+ *   - '+' (F_PLUS): Prepend a plus sign for positive numbers
+ *   - '0' (F_ZERO): Pad with zeros instead of spaces
+ *   - '#' (F_HASH): Use alternative form (e.g., 0x for hex)
+ *   - ' ' (F_SPACE): Prefix positive numbers with a space
+ *
+ * Return:
+ * The combined flags as a bitwise OR of the corresponding flag values.
  */
+
 int get_flags(const char *format, int *i)
 {
-	/* - + 0 # ' ' */
-	/* 1 2 4 8  16 */
-	int j, curr_i;
-	int flags = 0;
-	const char FLAGS_CH[] = {'-', '+', '0', '#', ' ', '\0'};
-	const int FLAGS_ARR[] = {F_MINUS, F_PLUS, F_ZERO, F_HASH, F_SPACE, 0};
+	int j, mamamiya_oww;
+	int lolo_popo = 0;
+	const char pleas_dont[] = {'-', '+', '0', '#', ' ', '\0'};
+	const int you_tired[] = {F_MINUS, F_PLUS, F_ZERO, F_HASH, F_SPACE, 0};
 
-	for (curr_i = *i + 1; format[curr_i] != '\0'; curr_i++)
+	for (mamamiya_oww = *i + 1; format[mamamiya_oww] != '\0'; mamamiya_oww++)
 	{
-		for (j = 0; FLAGS_CH[j] != '\0'; j++)
-			if (format[curr_i] == FLAGS_CH[j])
+		for (j = 0; pleas_dont[j] != '\0'; j++)
+			if (format[mamamiya_oww] == pleas_dont[j])
 			{
-				flags |= FLAGS_ARR[j];
+				lolo_popo |= you_tired[j];
 				break;
 			}
 
-		if (FLAGS_CH[j] == 0)
+		if (pleas_dont[j] == 0)
 			break;
 	}
 
-	*i = curr_i - 1;
+	*i = mamamiya_oww - 1;
 
-	return (flags);
+	return (lolo_popo);
 }

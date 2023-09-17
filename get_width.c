@@ -1,36 +1,44 @@
 #include "main.h"
 
 /**
- * get_width - Calculates the width for printing
- * @format: Formatted string in which to print the arguments.
- * @i: List of arguments to be printed.
- * @list: list of arguments.
+ * get_width - Extracts width from a format string
+ * @format: The input format string
+ * @i: A pointer to the current position in the format string
+ * @list: A va_list for handling variable arguments
  *
- * Return: width.
+ * Description:
+ * This function parses the format string starting from the position pointed
+ * to by 'i' and extracts the width value as specified by the format string.
+ * The width can be a non-negative integer or an asterisk (*) indicating that
+ * it should be obtained from the variable arguments list.
+ *
+ * Return:
+ * The extracted width value.
  */
+
 int get_width(const char *format, int *i, va_list list)
 {
-	int curr_i;
-	int width = 0;
+	int fuck_o;
+	int hahah = 0;
 
-	for (curr_i = *i + 1; format[curr_i] != '\0'; curr_i++)
+	for (fuck_o = *i + 1; format[fuck_o] != '\0'; fuck_o++)
 	{
-		if (is_digit(format[curr_i]))
+		if (is_digit(format[fuck_o]))
 		{
-			width *= 10;
-			width += format[curr_i] - '0';
+			hahah *= 10;
+			hahah += format[fuck_o] - '0';
 		}
-		else if (format[curr_i] == '*')
+		else if (format[fuck_o] == '*')
 		{
-			curr_i++;
-			width = va_arg(list, int);
+			fuck_o++;
+			hahah = va_arg(list, int);
 			break;
 		}
 		else
 			break;
 	}
 
-	*i = curr_i - 1;
+	*i = fuck_o - 1;
 
-	return (width);
+	return (hahah);
 }
