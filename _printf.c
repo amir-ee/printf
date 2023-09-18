@@ -3,17 +3,10 @@
 void print_buffer(char buffer[], int *buff_ind);
 
 /**
- * _printf - Prints formatted output to stdout
- * @format: The format string containing placeholders
- *
- * Description:
- * This function takes a format string and a variable number of
- * arguments and prints the formatted output to the standard output.
- *
- * Return: The number of characters printed (excluding the null byte
- *         used to end the output to strings), or -1 on error.
+ * _printf - Printf function
+ * @format: format.
+ * Return: Printed chars.
  */
-
 int _printf(const char *format, ...)
 {
 	int i, printed = 0, printed_chars = 0;
@@ -33,7 +26,7 @@ int _printf(const char *format, ...)
 			buffer[buff_ind++] = format[i];
 			if (buff_ind == BUFF_SIZE)
 				print_buffer(buffer, &buff_ind);
-
+			/* write(1, &format[i], 1);*/
 			printed_chars++;
 		}
 		else
@@ -43,9 +36,9 @@ int _printf(const char *format, ...)
 			width = get_width(format, &i, list);
 			precision = get_precision(format, &i, list);
 			size = get_size(format, &i);
-			i++;
+			++i;
 			printed = handle_print(format, &i, list, buffer,
-								   flags, width, precision, size);
+				flags, width, precision, size);
 			if (printed == -1)
 				return (-1);
 			printed_chars += printed;
@@ -60,15 +53,10 @@ int _printf(const char *format, ...)
 }
 
 /**
- * print_buffer - Prints the content of the buffer
- * @buffer: The buffer containing characters to be printed
- * @buff_ind: Pointer to the buffer index
- *
- * Description:
- * This function prints the characters stored in the buffer to
- * the standard output and resets the buffer index.
+ * print_buffer - Prints the contents of the buffer if it exist
+ * @buffer: Array of chars
+ * @buff_ind: Index at which to add next char, represents the length.
  */
-
 void print_buffer(char buffer[], int *buff_ind)
 {
 	if (*buff_ind > 0)
