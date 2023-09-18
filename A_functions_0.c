@@ -1,6 +1,5 @@
 #include "main.h"
 
-
 /**
  * print_char - Prints a character
  * @types: A va_list containing the character to print
@@ -67,7 +66,7 @@ int print_string(va_list types, char buffer[],
 	{
 		if (flags & F_MINUS)
 		{
-			write(1, &str[0], length);
+			write(1, str, length);
 			for (i = width - length; i > 0; i--)
 				write(1, " ", 1);
 			return (width);
@@ -76,14 +75,13 @@ int print_string(va_list types, char buffer[],
 		{
 			for (i = width - length; i > 0; i--)
 				write(1, " ", 1);
-			write(1, &str[0], length);
+			write(1, str, length);
 			return (width);
 		}
 	}
 
 	return (write(1, str, length));
 }
-
 
 /**
  * print_percent - Prints a percent sign
