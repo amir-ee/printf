@@ -21,13 +21,14 @@ int is_printable(char c)
 }
 
 /**
- * append_hexa_code - Append the hexadecimal code of an ASCII character to a buffer.
+ * append_hexa_code - Append the hexadecimal code of an ASCII char to a buffer.
  * @ascii_code: The ASCII code of the character to convert to hexadecimal.
  * @buffer: The buffer to which the hexadecimal code will be appended.
  * @i: The index in the buffer to start appending.
  *
  * Description:
- * This function appends the hexadecimal representation of an ASCII code 'ascii_code'
+ * This function appends the hexadecimal representation of an ASCII code
+ * 'ascii_code'
  * to a character buffer 'buffer' starting at the specified index 'i'.
  *
  * Return:
@@ -75,7 +76,8 @@ int is_digit(char c)
  * @size: The target size (S_LONG, S_SHORT, or S_INT).
  *
  * Description:
- * This function converts a signed integer 'num' to a different size (long, short, or int)
+ * This function converts a signed integer 'num' to a different size
+ * (long, short, or int)
  * based on the specified 'size' parameter.
  *
  * Return:
@@ -98,7 +100,8 @@ long int convert_size_number(long int num, int size)
  * @size: The target size (S_LONG, S_SHORT, or S_INT).
  *
  * Description:
- * This function converts an unsigned integer 'num' to a different size (long, short, or int)
+ * This function converts an unsigned integer 'num' to a different size
+ * (long, short, or int)
  * based on the specified 'size' parameter.
  *
  * Return:
