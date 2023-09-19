@@ -9,5 +9,5 @@
 
 ### Authors &copy;
 
-- Nicks
-- Musa Parsanka
+- amir-ee
+- oyayna
