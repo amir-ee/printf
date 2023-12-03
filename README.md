@@ -24,3 +24,4 @@
 
 - amir-ee
 - oyayna
+ :wq
