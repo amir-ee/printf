@@ -22,6 +22,6 @@
 
 ### Authors &copy;
 
-- amir-ee
+- mirr-x
 - oyayna
 #### :wq
